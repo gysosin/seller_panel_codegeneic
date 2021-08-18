@@ -1,3 +1,4 @@
+use Illuminate\Support\Facades\Session;
 @extends('layouts.auth')
 @section('title', 'dashboard')
 @section('body')
@@ -10,48 +11,52 @@
         <div class="content-wrapper">
             <div class="content-header row">
             </div>
+            <div>
+          
+            </div>
             <div class="content-body">
                 <section class="row flexbox-container">
                     <div class="col-xl-8 col-10 d-flex justify-content-center">
                         <div class="card bg-authentication rounded-0 mb-0">
+                            <form action="{{route('store')}}" method="POST" class="form">
+                                @csrf
+                                <div class="col-lg-12 col-12 p-0">
+                                    <div class="card rounded-0 mb-0 p-2">
+                                        <div class="col-md-6 col-12">
+                                            <b>
+                                                <h4>Select one option</h4>
+                                            </b>
+                                            <fieldset class="form-group">
+                                                <script type="text/javascript">
+                                                    function ShowHideDiv() {
+                                                        var ddlPassport = document.getElementById("ddlPassport");
+                                                        var dvPassport = document.getElementById("dvPassport");
+                                                        dvPassport.style.display = ddlPassport.value == "Y" ? "block" : "none";
+                                                        var dvPassport2 = document.getElementById("dvPassport2");
+                                                        dvPassport2.style.display = ddlPassport.value == "Y" ? "block" : "none";
 
-                            <div class="col-lg-12 col-12 p-0">
-                                <div class="card rounded-0 mb-0 p-2">
-                                    <div class="col-md-6 col-12">
-                                        <b>
-                                            <h4>Select one option</h4>
-                                        </b>
-                                        <fieldset class="form-group">
-                                            <script type="text/javascript">
-                                                function ShowHideDiv() {
-                                                    var ddlPassport = document.getElementById("ddlPassport");
-                                                    var dvPassport = document.getElementById("dvPassport");
-                                                    dvPassport.style.display = ddlPassport.value == "Y" ? "block" : "none";
-                                                    var dvPassport2 = document.getElementById("dvPassport2");
-                                                    dvPassport2.style.display = ddlPassport.value == "Y" ? "block" : "none";
-
-                                                }
-                                            </script>
-                                            <select class="form-control" id="ddlPassport" onchange="ShowHideDiv()">
-                                                <option>Select one option</option>
-                                                <option value="Y">I have GSTIN</option>
-                                                <option value="N">I don't have GSTIN</option>
-                                            </select>
-                                        </fieldset>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title">Personal Details</h4>
+                                                    }
+                                                </script>
+                                                <select class="form-control" id="ddlPassport" onchange="ShowHideDiv()">
+                                                    <option>Select one option</option>
+                                                    <option value="Y">I have GSTIN</option>
+                                                    <option value="N">I don't have GSTIN</option>
+                                                </select>
+                                            </fieldset>
                                         </div>
-                                        <div class="card-content">
-                                            <div class="card-body">
-                                                <form class="form">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Personal Details</h4>
+                                            </div>
+                                            <div class="card-content">
+                                                <div class="card-body">
+
                                                     <div class="form-body">
                                                         <div class="row">
                                                             <div class="col-md-6 col-12">
                                                                 <label>Name</label>
                                                                 <div class="form-label-group">
-                                                                    <input type="text" id="name" class="form-control" placeholder="First Name" name="name">
+                                                                    <input type="text" id="name" class="form-control" placeholder="Name" name="name">
                                                                     <label for="name">Name</label>
                                                                 </div>
                                                             </div>
@@ -72,20 +77,24 @@
                                                             <div class="col-md-6 col-12">
                                                                 <label>country</label>
                                                                 <fieldset class="form-group">
-                                                                    <select class="form-control" id="basicSelect">
-                                                                        <option>India</option>
-                                                                        <option>US</option>
-                                                                        <option>UK</option>
+                                                                    <select class="form-control" id="country" name="country">
+
                                                                     </select>
                                                                 </fieldset>
                                                             </div>
                                                             <div class="col-md-6 col-12">
                                                                 <label>State</label>
                                                                 <fieldset class="form-group">
-                                                                    <select class="form-control" id="basicSelect">
-                                                                        <option>----</option>
-                                                                        <option>----</option>
-                                                                        <option>----</option>
+                                                                    <select class="form-control" id="state" name="state">
+
+                                                                    </select>
+                                                                </fieldset>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+                                                                <label>city</label>
+                                                                <fieldset class="form-group">
+                                                                    <select class="form-control" id="city" name="city">
+
                                                                     </select>
                                                                 </fieldset>
                                                             </div>
@@ -162,26 +171,7 @@
                                                                     <label for="faddress">Full Address</label>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-6 col-12">
-                                                                <label>country</label>
-                                                                <fieldset class="form-group">
-                                                                    <select class="form-control" id="basicSelect">
-                                                                        <option>India</option>
-                                                                        <option>US</option>
-                                                                        <option>UK</option>
-                                                                    </select>
-                                                                </fieldset>
-                                                            </div>
-                                                            <div class="col-md-6 col-12">
-                                                                <label>State</label>
-                                                                <fieldset class="form-group">
-                                                                    <select class="form-control" id="basicSelect">
-                                                                        <option>----</option>
-                                                                        <option>----</option>
-                                                                        <option>----</option>
-                                                                    </select>
-                                                                </fieldset>
-                                                            </div>
+
                                                             <div class="col-md-12 col-12">
                                                                 <h4 class="card-title">Bank Details</h4>
                                                             </div>
@@ -203,13 +193,13 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="card-title">Upload Documents</h4>
+                                                                  <h4 class="card-title">Upload Documents</h4>
                                                             <div class="row">
 
 
-                                                                <div class="col-md-6 col-12">
+                                                                 <div class="col-md-6 col-12">
 
-                                                                    <div class="form-label-group">
+                                                                             <div class="form-label-group">
 
                                                                         <div class="custom-file">
                                                                             <input type="file" class="custom-file-input" id="cpancardu" name="cpancardu">
@@ -218,7 +208,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6 col-12">
-
+                                                                    
                                                                     <div class="form-label-group">
                                                                         <div class="custom-file">
                                                                             <input type="file" class="custom-file-input" id="gstdoc" name="gstdoc">
@@ -253,23 +243,87 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-12">
-                                                                    <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Register</button>
-                                                                    <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
+                                                                    <div class="col-12">
+                                                                        <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Register</button>
+                                                                        <button type="reset" class="btn btn-outline-warning mr-1 mb-1 waves-effect waves-light">Reset</button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 
+    <script>
+        var myObj = {
+            init: function() {
+                var that = this;
+                this.load_country();
+                document.getElementById("country").addEventListener("change", function() {
+                    that.load_state(this.value);
+                });
+                document.getElementById("state").addEventListener("change", function() {
+                    that.load_city(this.value);
+                });
+            },
+            load_country: function() {
+                var xhr = new XMLHttpRequest();
 
+                xhr.open("GET", "http://194.195.118.85:9955/api/countries", true);
+
+                xhr.onload = function() {
+                    var countries = JSON.parse(xhr.responseText);
+                    countries.forEach(function(value) {
+                        var op = document.createElement("option");
+                        op.innerText = value.name;
+                        op.setAttribute("value", value.id);
+                        document.getElementById("country").appendChild(op);
+                    });
+                };
+                xhr.send();
+            },
+            load_state: function(id) {
+                document.getElementById("state").innerHTML = '';
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "http://194.195.118.85:9955/api/states/" + id, true);
+
+                xhr.onload = function() {
+                    var countries = JSON.parse(xhr.responseText);
+                    countries.forEach(function(value) {
+                        var op = document.createElement("option");
+                        op.innerText = value.name;
+                        op.setAttribute("value", value.id);
+                        document.getElementById("state").appendChild(op);
+                    });
+                };
+                xhr.send();
+            },
+            load_city: function(id) {
+                document.getElementById("city").innerHTML = '';
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", "http://194.195.118.85:9955/api/cities/" + id, true);
+
+                xhr.onload = function() {
+                    var countries = JSON.parse(xhr.responseText);
+                    countries.forEach(function(value) {
+                        var op = document.createElement("option");
+                        op.innerText = value.name;
+                        op.setAttribute("value", value.id);
+                        document.getElementById("city").appendChild(op);
+                    });
+                };
+                xhr.send();
+            }
+        }
+        myObj.init();
+    </script>
     @endsection()

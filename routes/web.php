@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -87,10 +90,15 @@ Route::get('/dashboard-alltransactions', function () {
 
 //trasnaction routes ends
 //login register routes starts
-
+/* 
 Route::get('/register', function () {
     return view('auth/registration');
 });
+ */
+Route::get('/register', [\App\Http\Controllers\registrationcontroller::class, ('register')]);
+Route::post('registration', [\App\Http\Controllers\registrationcontroller::class, ('store')]);
+Route::get('/register', [\App\Http\Controllers\registrationcontroller::class, 'register'])->name('registration');
+
 
 Route::get('/', function () {
     return view('auth/login');
